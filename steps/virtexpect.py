@@ -7,7 +7,9 @@ handled with pexpect.
 import pexpect
 import sys
 import logging
+import os
 
+QEMU_CMD = os.environ.get("QEMU_CMD", "qemu-system-x86_64")
 
 class Instance(object):
     log = None
@@ -34,11 +36,10 @@ class Instance(object):
 	assert self.child
 
     def qemu_cmd(self, image):
-        cmd = "qemu-system-x86_64"
+        cmd = QEMU_CMD
         cmd += " -vnc :72"
         cmd += " -m 1024 -smp 4 -serial stdio -net user -net nic"
         cmd += " -snapshot -hda %s" % image
-        cmd += " -watchdog-action poweroff"
 
         if self.shared_path:
             self.log.debug("Using shared path: %s" % self.shared_path)

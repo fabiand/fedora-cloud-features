@@ -9,14 +9,14 @@ Feature: Basic bootability
           and that the VM is turned on
 
   Scenario: A bootloader is expected right after boot
-       When we wait for 15 seconds at most
+       When we wait for 30 seconds at most
        Then we expect the bootloader prompt to appear
 
   Scenario: The kernel and systemd is started
-       When we wait for 45 seconds at most
+       When we wait for 60 seconds at most
        Then we expect the kernel to be loaded
         and systemd to be running
 
   Scenario: A login prompt is displayed
-       When we wait for 90 seconds at most
+       When we wait for 120 seconds at most
        Then we expect a login prompt
