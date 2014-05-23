@@ -24,9 +24,8 @@ Cons:
 How to run
 ----------
 
-Download the Fedora cloud image to ~/Downloads, then
-
     $ pkcon install -y python-behave qemu-kvm
+    $ curl -O http://download.fedoraproject.org/pub/fedora/linux/updates/20/Images/x86_64/Fedora-x86_64-20-20140407-sda.qcow2
     $ behave .
 
 

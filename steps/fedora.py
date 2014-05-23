@@ -3,7 +3,7 @@ from behave import *
 import virtexpect as vms
 import os.path
 
-VMFILE = os.path.expandvars("$HOME/Downloads/Fedora-x86_64-20-20140407-sda.qcow2")
+VMFILE = "./Fedora-x86_64-20-20140407-sda.qcow2"
 
 @given(u'a default VM')
 def step_impl(ctx):

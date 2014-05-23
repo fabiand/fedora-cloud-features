@@ -34,7 +34,7 @@ class Instance(object):
 	assert self.child
 
     def qemu_cmd(self, image):
-        cmd = "qemu-kvm"
+        cmd = "qemu-system-x86_64"
         cmd += " -m 1024 -smp 4 -serial stdio -net user -net nic"
         cmd += " -snapshot -hda %s" % image
         cmd += " -watchdog-action poweroff"
