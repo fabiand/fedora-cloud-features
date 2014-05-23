@@ -3,7 +3,7 @@ Feature: Basic bootability
   Cover the basic boot process. Ensure that we see a bootloader
   and a login prompt is displayed.
 
-  Background: Some virtual machine
+  Background: Some virtual machine with Fedora
         Given a default VM
           and the latest Fedora cloud image
           and that the VM is turned on

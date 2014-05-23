@@ -8,7 +8,17 @@ A simple example of how
   - python-behave does the parsing
   - python-virtexpect provides interaction with the VMs
 
-All in all a way to realize autoamtic testing of cloud (and similar) images.
+All in all a way to realize automatic testing of cloud (and similar) images.
+
+Pros:
+
+  - Mainly reusing existing technologies
+  - Simple
+  - Separation of concerns
+
+Cons:
+
+  - Currently local only (extend to use libvirt, OS, or RHEV as a backend?)
 
 
 How to run
