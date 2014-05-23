@@ -1,47 +1,46 @@
-
-from behave import *
+from behave import step, given, then
 import virtexpect as vms
-import os.path
+from os import system
 
-VMFILE = "./Fedora-x86_64-20-20140407-sda.qcow2"
+DEFAULT_TIMEOUT = 60
 
-@given(u'a default VM')
-def step_impl(ctx):
-    ctx.instance = vms.FedoraInstance(VMFILE)
 
-@given(u'the latest Fedora cloud image')
-def step_impl(context):
-    assert os.path.exists(VMFILE), "Please download the latest Fedora cloud image to " + VMFILE
+@given(u'a VM is downloaded from "{url}"')
+def vm_is_downloaded_from(ctx, url):
+    try:
+        file_path = url.split('/')[-1]
+        system("curl -L -O %s" % url)
+        ctx.instance = vms.FedoraInstance(file_path)
+    except Exception as e:
+        raise Exception("Image %s cannot be downloaded: %s" % (url, str(e)))
 
-@given(u'that the VM is turned on')
-def step_impl(ctx):
+
+@step(u'the VM is turned on')
+def vm_is_turned_on(ctx):
     ctx.instance.spawn()
 
-@step(u'we wait for {timeout} seconds at most')
-def step_impl(ctx, timeout):
-    ctx.last_timeout = float(timeout)
 
 @then(u'we expect the bootloader prompt to appear')
-def step_impl(ctx):
+@then(u'we expect the bootloader prompt to appear in {timeout} seconds at most')
+def bootloader_appear(ctx, timeout=DEFAULT_TIMEOUT):
     pass
     # depends on https://fedorahosted.org/cloud/ticket/60
-    #ctx.instance.expect(".*Welcome to Fedora.*", timeout=ctx.last_timeout)
+    #ctx.instance.expect(".*Welcome to Fedora.*", timeout=float(timeout))
 
-@given(u'that the bootloader passed')
-def step_impl(ctx):
-    pass
-    # depends on https://fedorahosted.org/cloud/ticket/60
-    #ctx.instance.expect("Loading /boot/vmlinuz", timeout=ctx.last_timeout)
 
 @then(u'we expect the kernel to be loaded')
-def step_impl(ctx):
-    ctx.instance.expect(".*Linux version.*", timeout=ctx.last_timeout)
+@then(u'we expect the kernel to be loaded in {timeout} seconds at most')
+def kernel_loaded(ctx, timeout=DEFAULT_TIMEOUT):
+    ctx.instance.expect(".*Linux version.*", timeout=float(timeout))
+
 
 @then(u'systemd to be running')
-def step_impl(ctx):
-    ctx.instance.expect("systemd [0-9]+ running in system mode", timeout=ctx.last_timeout)
+@then(u'systemd to be running in {timeout} seconds at most')
+def systemd_is_running(ctx, timeout=DEFAULT_TIMEOUT):
+    ctx.instance.expect("systemd [0-9]+ running in system mode", float(timeout))
 
-@then(u'we expect a login prompt')
-def step_impl(ctx):
-    ctx.instance.expect("(?i)login:", timeout=ctx.last_timeout)
 
+@then(u'we expect a login prompt to appear')
+@then(u'we expect a login prompt to appear in {timeout} seconds at most')
+def login_prompt_appeared(ctx, timeout=DEFAULT_TIMEOUT):
+    ctx.instance.expect("(?i)login:", timeout=float(timeout))

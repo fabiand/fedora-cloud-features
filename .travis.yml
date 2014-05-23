@@ -9,6 +9,5 @@ before_install:
  - "pip install -r requirements.txt"
 
 script:
- - "curl -L -O http://download.fedoraproject.org/pub/fedora/linux/updates/20/Images/x86_64/Fedora-x86_64-20-20140407-sda.qcow2"
  - "behave"
  - "rm -vf *.qcow2"
