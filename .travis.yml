@@ -5,12 +5,10 @@ python:
 
 before_install:
  - "sudo apt-get update"
- - "sudo apt-get install qemu"
-
-install:
-  - "pip install -r requirements.txt"
+ - "sudo apt-get install qemu curl"
+ - "pip install -r requirements.txt"
 
 script:
- - "curl -O http://download.fedoraproject.org/pub/fedora/linux/updates/20/Images/x86_64/Fedora-x86_64-20-20140407-sda.qcow2"
+ - "curl -L -O http://download.fedoraproject.org/pub/fedora/linux/updates/20/Images/x86_64/Fedora-x86_64-20-20140407-sda.qcow2"
  - "behave"
  - "rm -vf *.qcow2"
