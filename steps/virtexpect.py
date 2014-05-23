@@ -35,6 +35,7 @@ class Instance(object):
 
     def qemu_cmd(self, image):
         cmd = "qemu-system-x86_64"
+        cmd += " -vnc :72"
         cmd += " -m 1024 -smp 4 -serial stdio -net user -net nic"
         cmd += " -snapshot -hda %s" % image
         cmd += " -watchdog-action poweroff"
