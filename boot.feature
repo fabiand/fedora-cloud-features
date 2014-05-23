@@ -18,5 +18,5 @@ Feature: Basic bootability
         and systemd to be running
 
   Scenario: A login prompt is displayed
-       When we wait for 240 seconds at most
+       When we wait for 480 seconds at most
        Then we expect a login prompt
